@@ -452,7 +452,8 @@ public class Pintore {
 		
 		View panel= new View();
 		panel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		panel.setSize(550, 500);
+		panel.setSize(650, 600);
+		panel.setResizable(false);
 		panel.setVisible(true);
 
 	}
