@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -16,11 +15,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 
 class View extends JFrame
 {
-	private JPanel panelBotones;
-	private JPanel cajaColores;
+	private JPanel panelDeControl, panelBotonesBorrado, panelColores;
 	private DrawablePanel panelDibujo;
 	private ButtonGroup opcionesColores;
 	private ButtonGroup opcionesTrazado;
@@ -40,7 +39,8 @@ class View extends JFrame
 	private JRadioButton radioModoBezier;
 	private JRadioButton radioModoPolygon;
 	private JRadioButton radioModoRelleno;
-	private Box cajita1, cajita2, cajita3, cajita4, cajita5;
+	private Box cajaColores1, cajaColores2, cajitaModos, cajitaAcciones,
+		cajitaBotonesBorrado;
 	private JButton deshacerButton;
 	private JButton borrarTodoButton;
 	private JButton rellenaButton;
@@ -54,12 +54,20 @@ class View extends JFrame
 	{
 		super("A Paint by: GLC");
 		
-		cajita1 = Box.createHorizontalBox();
-		cajita2 = Box.createHorizontalBox();
-		cajita3 = Box.createHorizontalBox();
-		cajita4 = Box.createHorizontalBox();
-		cajita5 = Box.createHorizontalBox();
-		cajaColores = new JPanel();
+		cajaColores1 = Box.createHorizontalBox();
+		cajaColores2 = Box.createHorizontalBox();
+		cajitaModos = Box.createHorizontalBox();
+		cajitaAcciones = Box.createHorizontalBox();
+		cajitaBotonesBorrado = Box.createVerticalBox();
+	
+		panelDeControl = new JPanel();
+		panelDeControl.setLayout(new BoxLayout(panelDeControl,
+				BoxLayout.Y_AXIS));
+		panelColores = new JPanel();
+		panelColores.setLayout(new BoxLayout(panelColores, BoxLayout.Y_AXIS));
+		panelBotonesBorrado = new JPanel(new BorderLayout(5,5));
+		panelDibujo = new DrawablePanel();
+		
 		deshacerButton = new JButton("Borrar");
 		borrarTodoButton = new JButton("Borrar todo!");
 		rellenaButton = new JButton("Rellena");
@@ -68,7 +76,6 @@ class View extends JFrame
 		aumTamButton = new JButton("+");
 		dismTamButton = new JButton("-");
 		radioBNegro = new JRadioButton("Negro", true);
-		//currentColor = Color.black;
 		radioBAmarillo = new JRadioButton("Amarillo", false);
 		radioBAzul = new JRadioButton("Azul", false);
 		radioBBlanco = new JRadioButton("Blanco", false);
@@ -84,73 +91,62 @@ class View extends JFrame
 		radioModoBezier = new JRadioButton("Curva",false);
 		radioModoPolygon = new JRadioButton("Poligono",false);
 		radioModoRelleno = new JRadioButton("Relleno",false);
-		
-		
-		panelBotones = new JPanel();
-		panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
-		panelDibujo = new DrawablePanel();
 		opcionesColores = new ButtonGroup();
+		opcionesTrazado = new ButtonGroup();
 		
-		cajita2.add(radioModoLinRecta);
-		cajita2.add(Box.createHorizontalGlue());
-		cajita2.add(radioModoCirculo);
-		cajita2.add(Box.createHorizontalGlue());
-		cajita2.add(radioModoLibre);
-		cajita2.add(Box.createHorizontalGlue());
-		cajita2.add(radioModoBezier);
-		cajita2.add(Box.createHorizontalGlue());
-		cajita2.add(radioModoPolygon);
-		/*cajita2.add(Box.createHorizontalGlue());
-		cajita2.add(radioModoRelleno);*/
+		cajitaModos.add(radioModoLinRecta);
+		cajitaModos.add(Box.createHorizontalGlue());
+		cajitaModos.add(radioModoCirculo);
+		cajitaModos.add(Box.createHorizontalGlue());
+		cajitaModos.add(radioModoLibre);
+		cajitaModos.add(Box.createHorizontalGlue());
+		cajitaModos.add(radioModoBezier);
+		cajitaModos.add(Box.createHorizontalGlue());
+		cajitaModos.add(radioModoPolygon);
 		
-		/*cajita3.add(rellenaButton);
-		cajita3.add(Box.createHorizontalGlue());*/
-		cajita3.add(aumTamButton);
-		cajita3.add(Box.createHorizontalGlue());
-		cajita3.add(dismTamButton);
-		cajita3.add(Box.createHorizontalGlue());
-		cajita3.add(rotarButton);
-		cajita3.add(Box.createHorizontalGlue());
-		cajita3.add(tracePolygButton);
-		cajita3.add(Box.createHorizontalGlue());
-		cajita3.add(rellenaButton);
+		cajitaAcciones.add(aumTamButton);
+		cajitaAcciones.add(Box.createHorizontalGlue());
+		cajitaAcciones.add(dismTamButton);
+		cajitaAcciones.add(Box.createHorizontalGlue());
+		cajitaAcciones.add(rotarButton);
+		cajitaAcciones.add(Box.createHorizontalGlue());
+		cajitaAcciones.add(tracePolygButton);
+		cajitaAcciones.add(Box.createHorizontalGlue());
+		cajitaAcciones.add(rellenaButton);
 		
-		cajita4.add(deshacerButton);
-		cajita4.add(Box.createHorizontalGlue());
-		cajita4.add(borrarTodoButton);
+		cajitaBotonesBorrado.add(deshacerButton);
+		cajitaBotonesBorrado.add(Box.createVerticalGlue());
+		cajitaBotonesBorrado.add(borrarTodoButton);
+		cajitaBotonesBorrado.add(Box.createVerticalGlue());
 		
+		cajaColores1.add(radioBAmarillo);
+		cajaColores1.add(Box.createHorizontalGlue());
+		cajaColores1.add(radioBAzul);
+		cajaColores1.add(Box.createHorizontalGlue());
+		cajaColores1.add(radioBBlanco);
+		cajaColores1.add(Box.createHorizontalGlue());
+		cajaColores1.add(radioBBlanco);
+		cajaColores1.add(Box.createHorizontalGlue());
+		cajaColores1.add(radioBNegro);
+		cajaColores1.add(Box.createHorizontalGlue());
+		cajaColores1.add(radioBRojo);
 		
-		cajita1.add(radioBAmarillo);
-		cajita1.add(Box.createHorizontalGlue());
-		cajita1.add(radioBAzul);
-		cajita1.add(Box.createHorizontalGlue());
-		cajita1.add(radioBBlanco);
-		cajita1.add(Box.createHorizontalGlue());
-		cajita1.add(radioBBlanco);
-		cajita1.add(Box.createHorizontalGlue());
-		cajita1.add(radioBNegro);
-		cajita1.add(Box.createHorizontalGlue());
-		cajita1.add(radioBRojo);
-		/*cajita1.add(Box.createHorizontalGlue());
-		cajita1.add(radioBVerde);*/
-		//cajita1.add(cajita1);
+		cajaColores2.add(radioBVerde);
+		cajaColores2.add(Box.createHorizontalGlue());
+		cajaColores2.add(radioBRosa);
+		cajaColores2.add(Box.createHorizontalGlue());
+		cajaColores2.add(radioBNaranja);
+		cajaColores2.add(Box.createHorizontalGlue());
+		cajaColores2.add(radioBMagenta);
+		cajaColores2.add(Box.createHorizontalGlue());
+		cajaColores2.add(radioBCian);
 		
-		cajita5.add(radioBVerde);
-		cajita5.add(Box.createHorizontalGlue());
-		cajita5.add(radioBRosa);
-		cajita5.add(Box.createHorizontalGlue());
-		cajita5.add(radioBNaranja);
-		cajita5.add(Box.createHorizontalGlue());
-		cajita5.add(radioBMagenta);
-		cajita5.add(Box.createHorizontalGlue());
-		cajita5.add(radioBCian);
-		
-		
-		cajaColores.setLayout(new BoxLayout(cajaColores, BoxLayout.Y_AXIS));
-		cajaColores.add(cajita1);
-		cajaColores.add(cajita5);
-		cajaColores.setBorder(BorderFactory.createTitledBorder(
+		panelColores.add(cajaColores1);
+		panelColores.add(cajaColores2);
+		panelColores.setBorder(BorderFactory.createTitledBorder(
 				" Selecciona un color: "));
+		
+		panelBotonesBorrado.add(cajitaBotonesBorrado, BorderLayout.WEST);
 		
 		opcionesColores.add(radioBAmarillo);
 		opcionesColores.add(radioBAzul);
@@ -163,7 +159,7 @@ class View extends JFrame
 		opcionesColores.add(radioBMagenta);
 		opcionesColores.add(radioBCian);
 		
-		opcionesTrazado = new ButtonGroup();
+		
 		opcionesTrazado.add(radioModoLinRecta);
 		opcionesTrazado.add(radioModoCirculo);
 		opcionesTrazado.add(radioModoLibre);
@@ -171,19 +167,21 @@ class View extends JFrame
 		opcionesTrazado.add(radioModoPolygon);
 		opcionesTrazado.add(radioModoRelleno);
 		
-		
-		panelBotones.add(cajaColores);
-		panelBotones.add(cajita2);
-		panelBotones.add(cajita3);
-		panelBotones.add(cajita4);
-		
-		
-		panelBotones.setBorder(BorderFactory.createEtchedBorder());
-		
-		
+		panelDeControl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		panelDeControl.add(Box.createVerticalStrut(5));
+		panelDeControl.add(panelColores);
+		panelDeControl.add(Box.createVerticalStrut(5));
+		panelDeControl.add(cajitaModos);
+		panelDeControl.add(Box.createVerticalStrut(5));
+		panelDeControl.add(new JSeparator());
+		panelDeControl.add(cajitaAcciones);
+		panelDeControl.add(Box.createVerticalStrut(5));
+		panelDeControl.add(new JSeparator());
+		panelDeControl.add(panelBotonesBorrado);
+		panelDeControl.add(Box.createVerticalStrut(5));
 		
 		add(panelDibujo, BorderLayout.CENTER);
-	    add(panelBotones, BorderLayout.SOUTH);
+	    add(panelDeControl, BorderLayout.SOUTH);
 	    
 	    /**Eventos**/
 	    radioBAmarillo.addItemListener(new ItemListener() {
@@ -275,11 +273,6 @@ class View extends JFrame
 				
 			}
 		});
-	    
-	    
-	    
-	    
-	    
 	    
 	    radioModoLinRecta.addItemListener(new ItemListener() {
 			
@@ -450,20 +443,11 @@ class View extends JFrame
 				
 			}
 		});
-	    
-	    
-	    
-	    
-	    
 	}
 }
 
-
 public class Pintore {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		
 		View panel= new View();
@@ -472,5 +456,4 @@ public class Pintore {
 		panel.setVisible(true);
 
 	}
-
 }
