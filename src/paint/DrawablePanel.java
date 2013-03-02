@@ -65,12 +65,12 @@ public class DrawablePanel extends Canvas{
 			
 			public void mouseReleased(MouseEvent me)
 			{
-				//repaint();
+				
 				if(mouseWasDragged && !modoPolygono && !modoRelleno)
 				{
 					if(modoLR)
 					{
-						trazoTemporalBezier = new Trazo(currentColor);
+						//trazoTemporalBezier = new Trazo(currentColor);
 						xc = puntos.get(0).getX();
 						yc = puntos.get(0).getY();
 						setXiniYini();
@@ -219,22 +219,18 @@ public class DrawablePanel extends Canvas{
 	public void paint(Graphics g)
 	{
 	
-		//super.paint(g);      
+		super.paint(g);      
 		Graphics2D g2 = (Graphics2D)g; 
-		//this.g = g;
 		
 		System.out.println("buf size: "+buffer.size());
 		for(Trazo este : buffer)
 		{
-			//System.out.println("entro al paint");
 			g.setColor(este.getColor());
 			for(Point2D pto : este.getConjuntoDePuntos())
 			{
-				//g.fillOval((int)pto.getX(), (int)pto.getY(), 4, 4);
 				Rectangle2D line = new Rectangle2D.Double(pto.getX(), pto.getY(),
 						3.0, 3.0);
 				g2.fill(line);
-				//g.drawLine((int)pto.getX(), (int)pto.getY(), (int)pto.getX(), (int)pto.getY());
 			}			
 		}
 	}
@@ -252,12 +248,8 @@ public class DrawablePanel extends Canvas{
 			cuentaPuntosParaPolygs=0;
 			puntos.clear();
 			System.out.println("Borrado!");
-			/*int ind = buffer.indexOf(trazoActual);
-			System.out.println("ind="+ind);
-			if(ind>=0)
-				buffer.remove(ind); //actualiza buffer*/
 			System.out.println(buffer.remove(trazoActual));
-			
+			trazoActual = null; //bug fix!*******
 			repaint(); //vuelve a pintar, pero con el buffer actualizado.
 		}
 	}
@@ -272,7 +264,7 @@ public class DrawablePanel extends Canvas{
 			xc = trazoActual.getPunto(0).getX();
 			yc = trazoActual.getPunto(0).getY();
 			buffer.remove(trazoActual);
-			Trazo nuevoTrazo = new Trazo(currentColor);
+			trazo = new Trazo(currentColor);
 			
 			//Object arrePoint[]= trazoActual.getConjuntoDePuntos().toArray();
 			
@@ -287,10 +279,10 @@ public class DrawablePanel extends Canvas{
 						(p.getY()-yc)*Math.sin(0.17);
 				double yp= (yc + (p.getX()-xc)*Math.sin(0.17)) +
 						(p.getY()-yc)*Math.cos(0.17);
-				nuevoTrazo.addPunto(new Point2D.Double(xp, yp));
+				trazo.addPunto(new Point2D.Double(xp, yp));
 				
 			}
-			trazoActual = nuevoTrazo;
+			trazoActual = trazo;
 			if(modoLR)
 			{
 				trazoTemporalBezier = trazoActual;
@@ -350,7 +342,6 @@ public class DrawablePanel extends Canvas{
 		if(v)
 			numPtosControl = 0;
 		modoBezier = v;
-		
 	}
 	
 	public void setModoPolygono(boolean v)
@@ -397,16 +388,16 @@ public class DrawablePanel extends Canvas{
 			cuentaPuntosParaPolygs=0;
 			puntos.clear();
 			buffer.remove(trazoActual);
-			Trazo nuevoTrazo = new Trazo(currentColor);
+			trazo = new Trazo(currentColor);
 			
 			//Object arrePoint[]= trazoActual.getConjuntoDePuntos().toArray();
 			
 			
 			for(Point2D p : trazoActual.getConjuntoDePuntos())
 			{
-				nuevoTrazo.addPunto(new Point2D.Double(p.getX()+5, p.getY()));
+				trazo.addPunto(new Point2D.Double(p.getX()+5, p.getY()));
 			}
-			trazoActual = nuevoTrazo;
+			trazoActual = trazo;
 			if(modoLR)
 			{
 				trazoTemporalBezier = trazoActual;
@@ -424,16 +415,16 @@ public class DrawablePanel extends Canvas{
 			cuentaPuntosParaPolygs=0;
 			puntos.clear();
 			buffer.remove(trazoActual);
-			Trazo nuevoTrazo = new Trazo(currentColor);
+			trazo = new Trazo(currentColor);
 			
 			//Object arrePoint[]= trazoActual.getConjuntoDePuntos().toArray();
 			
 			
 			for(Point2D p : trazoActual.getConjuntoDePuntos())
 			{
-				nuevoTrazo.addPunto(new Point2D.Double(p.getX()-5, p.getY()));
+				trazo.addPunto(new Point2D.Double(p.getX()-5, p.getY()));
 			}
-			trazoActual = nuevoTrazo;
+			trazoActual = trazo;
 			if(modoLR)
 			{
 				trazoTemporalBezier = trazoActual;
@@ -451,16 +442,16 @@ public class DrawablePanel extends Canvas{
 			cuentaPuntosParaPolygs=0;
 			puntos.clear();
 			buffer.remove(trazoActual);
-			Trazo nuevoTrazo = new Trazo(currentColor);
+			trazo = new Trazo(currentColor);
 			
 			//Object arrePoint[]= trazoActual.getConjuntoDePuntos().toArray();
 			
 			
 			for(Point2D p : trazoActual.getConjuntoDePuntos())
 			{
-				nuevoTrazo.addPunto(new Point2D.Double(p.getX(), p.getY()-5));
+				trazo.addPunto(new Point2D.Double(p.getX(), p.getY()-5));
 			}
-			trazoActual = nuevoTrazo;
+			trazoActual = trazo;
 			if(modoLR)
 			{
 				trazoTemporalBezier = trazoActual;
@@ -478,16 +469,16 @@ public class DrawablePanel extends Canvas{
 			cuentaPuntosParaPolygs=0;
 			puntos.clear();
 			buffer.remove(trazoActual);
-			Trazo nuevoTrazo = new Trazo(currentColor);
+			trazo = new Trazo(currentColor);
 			
 			//Object arrePoint[]= trazoActual.getConjuntoDePuntos().toArray();
 			
 			
 			for(Point2D p : trazoActual.getConjuntoDePuntos())
 			{
-				nuevoTrazo.addPunto(new Point2D.Double(p.getX(), p.getY()+5));
+				trazo.addPunto(new Point2D.Double(p.getX(), p.getY()+5));
 			}
-			trazoActual = nuevoTrazo;
+			trazoActual = trazo;
 			if(modoLR)
 			{
 				trazoTemporalBezier = trazoActual;
@@ -668,7 +659,7 @@ public class DrawablePanel extends Canvas{
 		 if(trazoActual!=null)
 		 {		
 			 buffer.remove(trazoActual);
-			Trazo nuevoTrazo = new Trazo(currentColor);
+			trazo = new Trazo(currentColor);
 			//int en =0;
 			double   dt;
 		    int   i, numberOfPoints=trazoActual.getLongitud();
@@ -678,10 +669,10 @@ public class DrawablePanel extends Canvas{
 		    for( i = 0; i < numberOfPoints; i++)
 		    {
 		    	Point2D nuevP = calcBezierPoint(i*dt);
-		    	nuevoTrazo.addPunto(new Point2D.Double(nuevP.getX(),
+		    	trazo.addPunto(new Point2D.Double(nuevP.getX(),
 						nuevP.getY()));
 		    }
-			trazoActual = nuevoTrazo;
+			trazoActual = trazo;
 			buffer.add(trazoActual);
 	 	}
 		 /*nuevoTrazo.addPunto(new Point2D.Double(calcBezierPoint(t).getX(),
@@ -707,15 +698,15 @@ public class DrawablePanel extends Canvas{
 			 cuentaPuntosParaPolygs=0;
 			 puntos.clear();
 			 buffer.remove(trazoActual);
-			Trazo nuevoTrazo = new Trazo(currentColor);
+			 trazo = new Trazo(currentColor);
 		 
 			
 			for(Point2D p : trazoActual.getConjuntoDePuntos())
 			{
-				nuevoTrazo.addPunto(new Point2D.Double(p.getX()*esc, 
+				trazo.addPunto(new Point2D.Double(p.getX()*esc, 
 						p.getY()*esc));
 			}
-			trazoActual = nuevoTrazo;
+			trazoActual = trazo;
 			buffer.add(trazoActual);
 			repaint();
 	 	}
@@ -730,7 +721,7 @@ public class DrawablePanel extends Canvas{
 		 else
 		 {
 			 Point temp = null; //para inicializar
-			 Trazo trazoPoligonal = new Trazo(currentColor);
+			 Trazo trazoPoli = new Trazo(currentColor);
 			 cuentaPuntosParaPolygs =0;
 			 
 			 for(int i=0; i< puntos.size(); i++)
@@ -746,7 +737,7 @@ public class DrawablePanel extends Canvas{
 						 xfin = temp.x;
 						 yfin = temp.y;
 						 doBresenham();
-						 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+						 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 						 break;
 					 case 2: //a partir de aqui!!!
 						 if(i==puntos.size()-1)
@@ -756,13 +747,13 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 xini = xfin;
 							 yini = yfin;
 							 xfin = puntos.get(0).x;
 							 yfin = puntos.get(0).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 break; //!!!!
 						 }
 						 else
@@ -773,7 +764,7 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 temp = puntos.get(i); //actualiza el ultimo punto!!
 							 break;
 						 }
@@ -785,13 +776,13 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 xini = xfin;
 							 yini = yfin;
 							 xfin = puntos.get(0).x;
 							 yfin = puntos.get(0).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 break; //!!!!
 						 }
 						 else
@@ -802,7 +793,7 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 temp = puntos.get(i); //actualiza el ultimo punto!!
 							 break;
 						 }
@@ -815,13 +806,13 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 xini = xfin;
 							 yini = yfin;
 							 xfin = puntos.get(0).x;
 							 yfin = puntos.get(0).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 break; //!!!!
 						 }
 						 else
@@ -832,7 +823,7 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 temp = puntos.get(i); //actualiza el ultimo punto!!
 							 break;
 						 }
@@ -844,13 +835,13 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 xini = xfin;
 							 yini = yfin;
 							 xfin = puntos.get(0).x;
 							 yfin = puntos.get(0).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 break; //!!!!
 						 }
 						 else
@@ -861,7 +852,7 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 temp = puntos.get(i); //actualiza el ultimo punto!!
 							 break;
 						 }
@@ -873,13 +864,13 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 xini = xfin;
 							 yini = yfin;
 							 xfin = puntos.get(0).x;
 							 yfin = puntos.get(0).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 break; //!!!!
 						 }
 						 else
@@ -890,7 +881,7 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 temp = puntos.get(i); //actualiza el ultimo punto!!
 							 break;
 						 }
@@ -901,25 +892,22 @@ public class DrawablePanel extends Canvas{
 							 xfin = puntos.get(i).x;
 							 yfin = puntos.get(i).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());
 							 xini = xfin;
 							 yini = yfin;
 							 xfin = puntos.get(0).x;
 							 yfin = puntos.get(0).y;
 							 doBresenham();
-							 trazoPoligonal.addAll(trazo.getConjuntoDePuntos());	
+							 trazoPoli.addAll(trazo.getConjuntoDePuntos());	
 							 break;
 				}//fin switch
 				 
 			 }//fin for
-			 trazoActual = trazoPoligonal;
-			 trazoPoligonal = null;
+			 trazoActual = trazoPoli;
+			 trazoPoli = null;
 			 buffer.add(trazoActual);
 			 puntos.clear();
 			 repaint();
-			 
-			 
-			 
 		 }
 	 }
 	 
@@ -953,9 +941,9 @@ public class DrawablePanel extends Canvas{
 		 
 		 int numIntr=0;
 		 ArrayList<Point2D> puntosTemporales = new ArrayList<Point2D>();
-		 Trazo trzRell = new Trazo(currentColor);
+		 trazo = new Trazo(currentColor);
 		 trazoFronterizo = trazoActual;
-		 trzRell = trazoActual;
+		 trazo = trazoActual;
 		 
 		 if(trazoActual!=null)
 		 { 
@@ -978,7 +966,7 @@ public class DrawablePanel extends Canvas{
 							 break;
 						 case 2:
 							 numIntr=0;
-							 trzRell.addAll(puntosTemporales);
+							 trazo.addAll(puntosTemporales);
 							 puntosTemporales.clear();
 							 break;
 					 }
@@ -1008,10 +996,10 @@ public class DrawablePanel extends Canvas{
 				 }
 			 }*/
 			 
-			 trazoActual = trzRell;
+			 trazoActual = trazo;
 			 buffer.add(trazoActual);
 			 puntosTemporales = null; 
-			 trzRell = null;
+			 trazo = null;
 			 trazoFronterizo = null;
 			 trazoActual=null;
 			 repaint();
