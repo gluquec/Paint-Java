@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 
 public class DrawablePanel extends Canvas{
 	
-	private final int WIDTH=550, HEIGHT=319;
+	private final int WIDTH=640, HEIGHT=590;
 	private int xini, yini, xfin, yfin;// contadoooorr;
 	private int x, y, dx, dy, p, incE, incNE, stepx, stepy;
 	private int x0,y0,x1,y1, radius, numPtosControl, cuentaPuntosParaPolygs;
@@ -118,7 +118,7 @@ public class DrawablePanel extends Canvas{
 			{
 				int x = me.getPoint().x;
 				int y = me.getPoint().y;
-				imp("("+x+","+y+")");
+				//imp("("+x+","+y+")");
 				trazoActual = clickSobreTrazo(x, y);
 				
 				if(trazoActual!=null)
@@ -128,10 +128,10 @@ public class DrawablePanel extends Canvas{
 				}
 				if(modoBezier)
 				{
-					imp("Bezier!!!!");
+					//imp("Bezier!!!!");
 					
 					numPtosControl++;
-					imp("numptoscontrol: "+numPtosControl);
+					//imp("numptoscontrol: "+numPtosControl);
 					switch(numPtosControl)
 					{
 						case 1:
@@ -151,37 +151,11 @@ public class DrawablePanel extends Canvas{
 				{
 					//va agregando puntos para el bresenham recursivo
 					cuentaPuntosParaPolygs++;
-					imp("puntos para poligs: "+cuentaPuntosParaPolygs);
+					//imp("puntos para poligs: "+cuentaPuntosParaPolygs);
 					puntos.add(me.getPoint());
 					
 				}
-				else if(modoRelleno)
-				{
-					/*
-					//atrapa el primer punto
-					ptoInteriorRelleno = me.getPoint();
-					
-					if(!estaDentroDelaFrontera((int)ptoInteriorRelleno.getX(), 
-							(int)ptoInteriorRelleno.getY(), trazoFronterizo))
-						mensErrorRelleno();
-					else
-					{
-						//curretncolor ahora es el fillcolor
-						trazo = new Trazo(currentColor);
-						boundaryFill((int)ptoInteriorRelleno.getX(), 
-								(int)ptoInteriorRelleno.getY(),
-								trazoFronterizo, new Trazo(currentColor));
-						//
-						trazoActual = trazo;
-						buffer.add(trazoActual);
-						contadoooorr=0;
-						modoRelleno=false;
-						repaint();  
-						
-						
-					}*/
-					
-				}
+				
 				
 			}
 		});
@@ -258,7 +232,7 @@ public class DrawablePanel extends Canvas{
 	
 	public void rotar()
 	{
-		imp("trazo actual ymodo circ"+trazoActual+" "+modoCirculo);
+		//imp("trazo actual ymodo circ"+trazoActual+" "+modoCirculo);
 		if(trazoActual!=null)
 		{
 			cuentaPuntosParaPolygs=0;
@@ -379,7 +353,7 @@ public class DrawablePanel extends Canvas{
 		radius = Math.abs(xfin-xini);
 		radCompara = Math.abs(yfin-yini);
 		radius = (radCompara>radius) ? radCompara : radius;
-		imp("radius="+radius);
+		//imp("radius="+radius);
 	}
 	
 	public void moveRight()
@@ -690,7 +664,7 @@ public class DrawablePanel extends Canvas{
 					trazoTemporalBezier.getPunto(0).getY());
 			cp3 = new Point2D.Double(trazoTemporalBezier.getPunto(ult).getX(),
 					trazoTemporalBezier.getPunto(ult).getY());
-			imp("cp0,cp3:"+cp0+","+cp3);
+			//imp("cp0,cp3:"+cp0+","+cp3);
 	 }
 	 
 	 public void escalar(double esc)
@@ -931,10 +905,10 @@ public class DrawablePanel extends Canvas{
 		 return resp;
 	 }
 	 
-	 public void imp(String t)
+	 /*public void imp(String t)
 	 {
 		 System.out.println(t);
-	 }
+	 }*/
 	 
 	 public void fill()
 	 {
