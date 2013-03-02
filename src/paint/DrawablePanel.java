@@ -1,6 +1,8 @@
+/**
+ * Author: GLC
+ */
 package paint;
 
-//import java.awt.AWTException;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
