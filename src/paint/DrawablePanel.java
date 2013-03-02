@@ -13,12 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-//import java.awt.geom.Ellipse2D;
-//import java.awt.geom.Line2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-//import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -36,7 +32,7 @@ public class DrawablePanel extends Canvas{
 	private ArrayList<Trazo> buffer; //un buffer es un arreglo de trazos.
 	private Color currentColor; //borderCol;
 	private boolean modoLR, mouseWasDragged, modoCirculo, modoLibre, 
-					modoBezier, modoPolygono, modoRelleno, intersect;
+					modoBezier, modoPolygono, modoRelleno;
 	private Point2D cp0, cp1, cp2, cp3; //ptoInteriorRelleno;
 	//private Robot rob;
 	//private BufferedImage bIm;
@@ -1047,162 +1043,4 @@ public class DrawablePanel extends Canvas{
 		 		"Error", JOptionPane.ERROR_MESSAGE);
 	 }
 	 
-	 private boolean estaDentroDelaFrontera(int x, int y, int xmenor,
-			 int ymenor, int xMayor, int yMayor)
-	 {
-		 
-		 
-		 if((x>xmenor && x<xMayor) && (y>ymenor && y<yMayor))
-			 return true;
-		 else
-			 return false;
-		 
-	 }
-	 
-	 private int obtenerXMayor(Trazo trazoDelim)
-	 {
-		 int MAX=0;
-		 for(Point2D p : trazoDelim.getConjuntoDePuntos())
-		 {
-			 if((int)p.getX() > MAX)
-				 MAX = (int)p.getX(); 
-		 }
-		 return MAX;
-	 }
-	 
-	 private int obtenerXMenor(Trazo trazoDelim)
-	 {
-		 int min= (int)trazoDelim.getPunto(0).getX(); //inicializado!
-		 
-		 for(Point2D p : trazoDelim.getConjuntoDePuntos())
-		 {
-			 if((int)p.getX() < min)
-				  min = (int)p.getX(); 
-		 }
-		 return min;
-	 }
-	 
-	 private int obtenerYMayor(Trazo trazoDelim)
-	 {
-		 int MAX=0;
-		 for(Point2D p : trazoDelim.getConjuntoDePuntos())
-		 {
-			 if((int)p.getY() > MAX)
-				 MAX = (int)p.getY(); 
-		 }
-		 return MAX;
-	 }
-	 
-	 private int obtenerYMenor(Trazo trazoDelim)
-	 {
-		 int min= (int)trazoDelim.getPunto(0).getY(); //inicializado!
-		 
-		 for(Point2D p : trazoDelim.getConjuntoDePuntos())
-		 {
-			 if((int)p.getY() < min)
-				  min = (int)p.getY(); 
-		 }
-		 return min;
-	 }
-	 
-	/* public void boundaryFill(int x, int y, Trazo trazoLimitador, Trazo trazoRelleno)
-	 {
-		  //muy importante el trazoLimitador y trazoRelleno
-		 try
-		  {
-			 Point2D punt = new Point2D.Double(x,y);
-			 if(!trazoLimitador.contains(punt) && !trazoRelleno.contains(punt)
-					 		&& contadoooorr<1000)
-			 {
-				 imp(""+contadoooorr);
-				  contadoooorr++;
-			    trazoRelleno.addPunto(new Point(x,y));
-			    //g.setColor(currentColor);
-			    boundaryFill(x+1 ,y,trazoLimitador,trazoRelleno);
-			    boundaryFill(x-1,y,trazoLimitador,trazoRelleno);
-			    boundaryFill(x,y-1,trazoLimitador,trazoRelleno);
-			    boundaryFill(x,y+1,trazoLimitador,trazoRelleno);
-			    boundaryFill(x+1,y-1,trazoLimitador,trazoRelleno);
-			    boundaryFill(x+1,y+1,trazoLimitador,trazoRelleno);
-			    boundaryFill(x-1,y-1,trazoLimitador,trazoRelleno);
-			    boundaryFill(x-1,y+1,trazoLimitador,trazoRelleno);
-			    
-			    trazo.addAll(trazoRelleno.getConjuntoDePuntos());
-			  }
-		  }catch(StackOverflowError soe){
-			  soe.printStackTrace();
-		  }
-		}
-		 
-	 
-	
-	 
-	 private boolean estaDentroDelaFrontera(int x, int y, Trazo trzDelim)
-	 {
-		 int xmenor, xMayor, ymenor, yMayor;
-		 
-		 xmenor = obtenerXMenor(trzDelim);
-		 ymenor = obtenerYMenor(trzDelim);
-		 xMayor = obtenerXMayor(trzDelim);
-		 yMayor= obtenerYMayor(trzDelim);
-		 
-		 if((x>xmenor && x<xMayor) && (y>ymenor && y<yMayor))
-			 return true;
-		 else
-			 return false;
-		 
-	 }
-	 
-	 private int obtenerXMayor(Trazo trazoDelim)
-	 {
-		 int MAX=0;
-		 for(Point2D p : trazoDelim.getConjuntoDePuntos())
-		 {
-			 if((int)p.getX() > MAX)
-				 MAX = (int)p.getX(); 
-		 }
-		 return MAX;
-	 }
-	 
-	 private int obtenerXMenor(Trazo trazoDelim)
-	 {
-		 int min= (int)trazoDelim.getPunto(0).getX(); //inicializado!
-		 
-		 for(Point2D p : trazoDelim.getConjuntoDePuntos())
-		 {
-			 if((int)p.getX() < min)
-				  min = (int)p.getX(); 
-		 }
-		 return min;
-	 }
-	 
-	 private int obtenerYMayor(Trazo trazoDelim)
-	 {
-		 int MAX=0;
-		 for(Point2D p : trazoDelim.getConjuntoDePuntos())
-		 {
-			 if((int)p.getY() > MAX)
-				 MAX = (int)p.getY(); 
-		 }
-		 return MAX;
-	 }
-	 
-	 private int obtenerYMenor(Trazo trazoDelim)
-	 {
-		 int min= (int)trazoDelim.getPunto(0).getY(); //inicializado!
-		 
-		 for(Point2D p : trazoDelim.getConjuntoDePuntos())
-		 {
-			 if((int)p.getY() < min)
-				  min = (int)p.getY(); 
-		 }
-		 return min;
-	 }*/
-	 
-	 
-	
-	
-	
-	
-
 }
