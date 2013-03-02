@@ -180,8 +180,12 @@ class View extends JFrame
 		panelDeControl.add(panelBotonesBorrado);
 		panelDeControl.add(Box.createVerticalStrut(5));
 		
+		panelDeControl.setBorder(
+				BorderFactory.createTitledBorder(" Panel de Control: "));
+		
 		add(panelDibujo, BorderLayout.CENTER);
 	    add(panelDeControl, BorderLayout.SOUTH);
+	    
 	    
 	    /**Eventos**/
 	    radioBAmarillo.addItemListener(new ItemListener() {
